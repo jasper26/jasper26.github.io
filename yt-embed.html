@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <!-- 讓瀏覽器在跨網域請求時至少送出 origin 當作 Referer -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>html,body{margin:0;height:100%}iframe{border:0;width:100%;height:100%}</style>
+</head>
+<body>
+<script>
+  (function () {
+    const p = new URLSearchParams(location.search);
+    const vid = (p.get('vid') || '').trim();
+    const hl  = (p.get('hl')  || '').trim();
+    if (!vid) return;
+
+    const origin = location.origin; // 這裡會是 https://jasper26.github.io
+    const src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(vid)
+              + "?enablejsapi=1&playsinline=1&modestbranding=1&rel=0"
+              + "&origin=" + encodeURIComponent(origin)
+              + (hl ? "&hl=" + encodeURIComponent(hl) : "");
+
+    document.write(
+      '<iframe src="' + src + '" ' +
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+      'allowfullscreen ' +
+      'referrerpolicy="strict-origin-when-cross-origin"></iframe>'
+    );
+  })();
+</script>
+</body>
+</html>
